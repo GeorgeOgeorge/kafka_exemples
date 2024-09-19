@@ -72,3 +72,19 @@ class BaseConsumer:
             NotImplementedError: Se não for implementado por subclasses.
         """
         raise NotImplementedError("Please create a message handler function")
+
+
+class OrderMessage(BaseModel):
+    id: int
+    item: str
+    price: float
+
+
+class OrderConsumer(BaseConsumer):
+    topic = "city.order"
+
+    def __init__(self) -> None:
+        super().__init__(self.topic, OrderMessage)
+
+    async def _message_handler(self, message: OrderMessage) -> None:
+        logging.info(f"Nova mensagem de pedido recebida: {message.id}, {message.item}, {message.price}")

@@ -53,3 +53,29 @@ class BaseProducer:
             self._producer.poll(1)
         except Exception as publish_message_error:
             raise publish_message_error
+
+
+class NewPlayer(BaseModel):
+    login: str
+    password: str
+
+
+class PlayerManager(BaseProducer):
+    topic = "game"
+
+    def __init__(self) -> None:
+        super().__init__(self.topic)
+
+    def new_player(self, player_data: NewPlayer) -> None:
+        """creates a new player in game server
+
+        Args:
+            player_data (NewPlayer): new player credentials
+        """
+        try:
+            self.publish_message(sub_topic="new_player", data=player_data)
+        except Exception as create_player_error:
+            logging.error(f"Error creating new player: {str(create_player_error)}")
+            raise create_player_error
+        else:
+            logging.info("New player created.")
