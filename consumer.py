@@ -88,3 +88,17 @@ class OrderConsumer(BaseConsumer):
 
     async def _message_handler(self, message: OrderMessage) -> None:
         logging.info(f"Nova mensagem de pedido recebida: {message.id}, {message.item}, {message.price}")
+
+
+# import asyncio
+
+# from game_server.consumers import OrderConsumer
+
+
+# async def main():
+#     await asyncio.gather(
+#         OrderConsumer().start_consumer()
+#     )
+
+# if __name__ == "__main__":
+#     asyncio.run(main())
